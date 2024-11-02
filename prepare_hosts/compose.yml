@@ -1,0 +1,6 @@
+services:
+  almalinux:
+    build:
+      dockerfile: Dockerfile
+    container_name: clickhouse
+    command: sleep infinity

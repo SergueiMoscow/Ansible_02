@@ -1,0 +1,27 @@
+---
+clickhouse_version: "22.3.3.44"
+clickhouse_packages:
+  - clickhouse-client
+  - clickhouse-server
+  - clickhouse-common-static
+
+vector_config_dir: "/etc/vector"
+vector_config_file: "vector.yml"
+
+vector_config:
+  sources:
+    apache_logs:
+      type: "file"
+      include:
+        - "/var/log/apache2/*.log"
+      ignore_older_secs: 86400
+
+  sinks:
+    es_cluster:
+      inputs:
+        - "apache_logs"
+      type: "elasticsearch"
+      endpoints:
+        - "http://79.12.221.222:9200"
+      bulk:
+        index: "vector-%Y-%m-%d"
